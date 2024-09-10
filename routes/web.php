@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MedicineController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,4 +20,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+
+    Route::group(['prefix' => 'medicines'], function () {
+        Route::get('/', [MedicineController::class, 'index'])->name('medicines.index');
+        Route::delete('/{id}', [MedicineController::class, 'destroy'])->name('medicines.destroy');
+        Route::get('/create', [MedicineController::class, 'create'])->name('medicines.create');
+        Route::post('/store', [MedicineController::class, 'store'])->name('medicines.store');
+        Route::get('/{id}/edit', [MedicineController::class, 'edit'])->name('medicines.edit');
+        Route::put('/{id}/update', [MedicineController::class, 'update'])->name('medicines.update');
+    });
 });

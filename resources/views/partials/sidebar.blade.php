@@ -17,13 +17,13 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
-                    <a href="#" class="nav-link @if(route('dashboard.index')) active @endif">
+                    <a href="{{ route('dashboard.index') }}" class="nav-link @if(request()->is('dashboard*')) active @endif">
                         <i class="nav-icon fas fa-home"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
+                <li class="nav-item @if(request()->is('medicines*')) menu-open @endif">
+                    <a href="#" class="nav-link @if(request()->is('medicines*')) active @endif">
                         <i class="nav-icon fas fa-database"></i>
                         <p>
                             Master
@@ -32,7 +32,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('medicines.index') }}" class="nav-link @if(request()->is('medicines*')) active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Medicine</p>
                             </a>
