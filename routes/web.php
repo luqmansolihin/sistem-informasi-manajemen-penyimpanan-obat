@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MedicineController;
+use App\Http\Controllers\PatientController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -28,5 +29,14 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/store', [MedicineController::class, 'store'])->name('medicines.store');
         Route::get('/{id}/edit', [MedicineController::class, 'edit'])->name('medicines.edit');
         Route::put('/{id}/update', [MedicineController::class, 'update'])->name('medicines.update');
+    });
+
+    Route::group(['prefix' => 'patients'], function () {
+        Route::get('/', [PatientController::class, 'index'])->name('patients.index');
+        Route::delete('/{id}', [PatientController::class, 'destroy'])->name('patients.destroy');
+        Route::get('/create', [PatientController::class, 'create'])->name('patients.create');
+        Route::post('/store', [PatientController::class, 'store'])->name('patients.store');
+        Route::get('/{id}/edit', [PatientController::class, 'edit'])->name('patients.edit');
+        Route::put('/{id}/update', [PatientController::class, 'update'])->name('patients.update');
     });
 });

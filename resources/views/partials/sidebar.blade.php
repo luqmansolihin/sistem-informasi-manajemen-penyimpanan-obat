@@ -22,8 +22,8 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li class="nav-item @if(request()->is('medicines*')) menu-open @endif">
-                    <a href="#" class="nav-link @if(request()->is('medicines*')) active @endif">
+                <li class="nav-item @if(request()->is('medicines*') OR request()->is('patients*')) menu-open @endif">
+                    <a href="#" class="nav-link @if(request()->is('medicines*') OR request()->is('patients*')) active @endif">
                         <i class="nav-icon fas fa-database"></i>
                         <p>
                             Master
@@ -38,7 +38,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('patients.index') }}" class="nav-link @if(request()->is('patients*')) active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Patient</p>
                             </a>
