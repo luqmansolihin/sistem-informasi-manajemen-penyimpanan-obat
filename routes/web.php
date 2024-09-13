@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\TransactionMedicineController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -38,5 +39,16 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/store', [PatientController::class, 'store'])->name('patients.store');
         Route::get('/{id}/edit', [PatientController::class, 'edit'])->name('patients.edit');
         Route::put('/{id}/update', [PatientController::class, 'update'])->name('patients.update');
+    });
+
+    Route::group(['prefix' => 'transactions'], function () {
+        Route::group(['prefix' => 'medicines'], function () {
+            Route::get('/', [TransactionMedicineController::class, 'index'])->name('transactions.medicines.index');
+            Route::delete('/{id}', [TransactionMedicineController::class, 'destroy'])->name('transactions.medicines.destroy');
+            Route::get('/create', [TransactionMedicineController::class, 'create'])->name('transactions.medicines.create');
+            Route::post('/store', [TransactionMedicineController::class, 'store'])->name('transactions.medicines.store');
+            Route::get('/{id}/edit', [TransactionMedicineController::class, 'edit'])->name('transactions.medicines.edit');
+            Route::put('/{id}/update', [TransactionMedicineController::class, 'update'])->name('transactions.medicines.update');
+        });
     });
 });

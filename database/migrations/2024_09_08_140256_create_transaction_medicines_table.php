@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('transaction_medicines', function (Blueprint $table) {
             $table->id();
             $table->foreignId('medicine_id')->constrained('medicines')->cascadeOnDelete();
-            $table->timestamp('purchase_date');
-            $table->timestamp('expired_date');
+            $table->date('purchase_date');
+            $table->date('expired_date');
             $table->bigInteger('qty');
+            $table->bigInteger('qty_balance');
             $table->timestamps();
             $table->softDeletes();
         });

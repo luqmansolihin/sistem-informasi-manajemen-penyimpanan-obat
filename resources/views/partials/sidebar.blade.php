@@ -45,8 +45,8 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
+                <li class="nav-item @if(request()->is('transactions/medicines*') OR request()->is('transactions/patients*')) menu-open @endif">
+                    <a href="#" class="nav-link @if(request()->is('transactions/medicines*') OR request()->is('transactions/patients*')) active @endif">
                         <i class="nav-icon fas fa-book-medical"></i>
                         <p>
                             Transaction
@@ -55,7 +55,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('transactions.medicines.index') }}" class="nav-link @if(request()->is('transactions/medicines*')) active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Medicine</p>
                             </a>
