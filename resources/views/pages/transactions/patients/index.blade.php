@@ -11,7 +11,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Transaction Medicine</h3>
+                    <h3 class="card-title">Transaction Patient</h3>
                 </div>
 
                 <div class="card-body">
@@ -25,37 +25,30 @@
                     @endif
 
                     <div class="col-lg-2 p-0 mb-2">
-                        <a href="{{ route('transactions.medicines.create') }}" class="btn btn-primary btn-block">Add Transaction Medicine</a>
+                        <a href="{{ route('transactions.patients.create') }}" class="btn btn-primary btn-block">Add Transaction Patient</a>
                     </div>
 
-                    <table id="transaction-medicines" class="table table-bordered table-striped">
+                    <table id="transaction-patients" class="table table-bordered table-striped">
                         <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Purchase Date</th>
-                            <th>Expired Date</th>
-                            <th>Quantity</th>
-                            <th>Balance</th>
+                            <th>Checkup Date</th>
+                            <th>Disease Name</th>
+                            <th>Medical Expense</th>
                             <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($transactionMedicines as $transactionMedicine)
+                        @foreach($transactionPatients as $transactionPatient)
                             <tr>
-                                <td>{{ $transactionMedicine->medicine->name }}</td>
-                                <td>{{ $transactionMedicine->purchase_date }}</td>
-                                <td>{{ $transactionMedicine->expired_date }}</td>
-                                <td>{{ $transactionMedicine->qty }}</td>
-                                <td>{{ $transactionMedicine->qty_balance }}</td>
+                                <td>{{ $transactionPatient->patient->name }}</td>
+                                <td>{{ date('d F Y', strtotime($transactionPatient->checkup_date)) }}</td>
+                                <td>{{ $transactionPatient->disease_name }}</td>
+                                <td>{{ 'Rp ' . number_format($transactionPatient->medical_expense, 2, ',', '.') }}</td>
                                 <td>
-                                    <a href="{{ route('transactions.medicines.edit', $transactionMedicine->id) }}" class="badge bg-warning" title="Update"><i class="fas fa-edit"></i></a>
-                                    <form action="{{ route('transactions.medicines.destroy', $transactionMedicine->id) }}" method="POST" class="d-inline">
-                                        @method('delete')
-                                        @csrf
-                                        <button type="submit" class="badge bg-danger border-0" title="Delete" onclick="return confirm('Are you sure you want to delete?')">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
-                                    </form>
+                                    <a href="{{ route('transactions.patients.show', $transactionPatient->id) }}" class="badge bg-primary" title="Detail"><i class="fas fa-eye"></i></a>
+                                    <a href="{{ route('transactions.patients.edit', $transactionPatient->id) }}" class="badge bg-warning" title="Update"><i class="fas fa-edit"></i></a>
+                                    <a href="{{ route('transactions.patients.preview.delete', $transactionPatient->id) }}" class="badge bg-danger" title="Delete"><i class="fas fa-trash-alt"></i></a>
                                 </td>
                             </tr>
                         @endforeach
@@ -83,10 +76,10 @@
 
     <script>
         $(function () {
-            $("#transaction-medicines").DataTable({
+            $("#transaction-patients").DataTable({
                 "order": [
                     [1, 'desc'],
-                    [0, 'asc']
+                    [0, 'asc'],
                 ],
                 "responsive": true,
                 "lengthChange": false,
@@ -115,7 +108,7 @@
             })
                 .buttons()
                 .container()
-                .appendTo('#transaction-medicines_wrapper .col-md-6:eq(0)');
+                .appendTo('#transaction-patients_wrapper .col-md-6:eq(0)');
         });
     </script>
 @endpush
