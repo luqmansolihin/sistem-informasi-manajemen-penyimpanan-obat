@@ -27,7 +27,6 @@ class TransactionMedicineUpdateRequest extends FormRequest
             ],
             'quantity' => ['required', 'int', 'min:1'],
             'qty' => ['required', 'int', 'min:1'],
-            'qty_balance' => ['required', 'int', 'min:1'],
             'purchase_date' => ['required', 'date', 'date_format:Y-m-d'],
             'expired_date' => ['required', 'date', 'date_format:Y-m-d'],
         ];
@@ -38,7 +37,6 @@ class TransactionMedicineUpdateRequest extends FormRequest
         $this->merge([
             'medicine_id' => $this->medicine,
             'qty' => $this->quantity,
-            'qty_balance' => $this->quantity
         ]);
     }
 }

@@ -260,23 +260,23 @@ class TransactionPatientController extends Controller
                             ->orderBy('purchase_date')
                             ->get();
 
-                        $qty_to_update = $reqTransactionPatientHasMedicine['quantity'] - $transactionPatientHasMedicine->qty;
+                        $qtyToUpdate = $reqTransactionPatientHasMedicine['quantity'] - $transactionPatientHasMedicine->qty;
 
-                        $transactionPatientHasMedicine->increment('qty', $qty_to_update);
+                        $transactionPatientHasMedicine->increment('qty', $qtyToUpdate);
 
                         foreach ($transactionMedicines as $transactionMedicine) {
                             $transactionMedicine = TransactionMedicine::query()
                                 ->where('id', $transactionMedicine->id)
                                 ->first();
 
-                            if ($transactionMedicine->qty_balance > $qty_to_update) {
-                                $transactionMedicine->decrement('qty_balance', $qty_to_update);
+                            if ($transactionMedicine->qty_balance > $qtyToUpdate) {
+                                $transactionMedicine->decrement('qty_balance', $qtyToUpdate);
 
-                                $qty = $qty_to_update;
-                                $qty_to_update -= $qty_to_update;
+                                $qty = $qtyToUpdate;
+                                $qtyToUpdate -= $qtyToUpdate;
                             } else {
                                 $qty = $transactionMedicine->qty_balance;
-                                $qty_to_update -= $transactionMedicine->qty_balance;
+                                $qtyToUpdate -= $transactionMedicine->qty_balance;
 
                                 $transactionMedicine->decrement('qty_balance', $transactionMedicine->qty_balance);
                             }
@@ -297,11 +297,11 @@ class TransactionPatientController extends Controller
                                     ]);
                             }
 
-                            if ($qty_to_update <= 0)
+                            if ($qtyToUpdate <= 0)
                                 break;
                         }
 
-                        if ($qty_to_update > 0) { // Check the quantity medicine to sale is fulfilled
+                        if ($qtyToUpdate > 0) { // Check the quantity medicine to sale is fulfilled
                             DB::rollBack();
 
                             throw ValidationException::withMessages([
@@ -310,9 +310,9 @@ class TransactionPatientController extends Controller
                         }
 
                     } else if ($reqTransactionPatientHasMedicine['quantity'] < $transactionPatientHasMedicine->qty) { // Check request quantity is under existing quantity
-                        $qty_to_remove = $transactionPatientHasMedicine->qty - $reqTransactionPatientHasMedicine['quantity'];
+                        $qtyToRemove = $transactionPatientHasMedicine->qty - $reqTransactionPatientHasMedicine['quantity'];
 
-                        $transactionPatientHasMedicine->decrement('qty', $qty_to_remove);
+                        $transactionPatientHasMedicine->decrement('qty', $qtyToRemove);
 
                         $medicineSales = MedicineSale::query()
                             ->where('transaction_patient_has_medicine_id', $transactionPatientHasMedicine->id)
@@ -325,27 +325,27 @@ class TransactionPatientController extends Controller
                                 ->withTrashed()
                                 ->first();
 
-                            if ($medicineSale->qty > $qty_to_remove) {
-                                $transactionMedicine->increment('qty_balance', $qty_to_remove);
+                            if ($medicineSale->qty > $qtyToRemove) {
+                                $transactionMedicine->increment('qty_balance', $qtyToRemove);
 
                                 $medicineSale = MedicineSale::query()
                                     ->where('id', $medicineSale->id)
                                     ->first();
 
-                                $medicineSale->decrement('qty', $qty_to_remove);
+                                $medicineSale->decrement('qty', $qtyToRemove);
 
-                                $qty_to_remove -= $qty_to_remove;
+                                $qtyToRemove -= $qtyToRemove;
                             } else {
                                 $transactionMedicine->increment('qty_balance', $medicineSale->qty);
 
-                                $qty_to_remove -= $medicineSale->qty;
+                                $qtyToRemove -= $medicineSale->qty;
 
                                 MedicineSale::query()
                                     ->where('id', $medicineSale->id)
                                     ->delete();
                             }
 
-                            if ($qty_to_remove <= 0)
+                            if ($qtyToRemove <= 0)
                                 break;
                         }
                     }
@@ -362,13 +362,13 @@ class TransactionPatientController extends Controller
                         ]);
                     }
 
-                    $qty_to_update = $reqTransactionPatientHasMedicine['quantity'];
+                    $qtyToUpdate = $reqTransactionPatientHasMedicine['quantity'];
 
                     $transactionPatientHasMedicine = TransactionPatientHasMedicine::query()
                         ->create([
                             'transaction_patient_id' => $transactionPatient->id,
                             'medicine_id' => $reqTransactionPatientHasMedicine['medicine'],
-                            'qty' => $qty_to_update,
+                            'qty' => $qtyToUpdate,
                         ]);
 
                     $transactionMedicines = TransactionMedicine::query()
@@ -383,12 +383,12 @@ class TransactionPatientController extends Controller
                             ->where('id', $transactionMedicine->id)
                             ->first();
 
-                        if ($transactionMedicine->qty_balance > $qty_to_update) {
-                            $qty = $qty_to_update;
-                            $qty_to_update -= $qty_to_update;
+                        if ($transactionMedicine->qty_balance > $qtyToUpdate) {
+                            $qty = $qtyToUpdate;
+                            $qtyToUpdate -= $qtyToUpdate;
                         } else {
                             $qty = $transactionMedicine->qty_balance;
-                            $qty_to_update -= $transactionMedicine->qty_balance;
+                            $qtyToUpdate -= $transactionMedicine->qty_balance;
                         }
 
                         $transactionMedicine->decrement('qty_balance', $qty);
@@ -400,11 +400,11 @@ class TransactionPatientController extends Controller
                                 'qty' => $qty
                             ]);
 
-                        if ($qty_to_update <= 0)
+                        if ($qtyToUpdate <= 0)
                             break;
                     }
 
-                    if ($qty_to_update > 0) { // Check the quantity medicine to sale is fulfilled
+                    if ($qtyToUpdate > 0) { // Check the quantity medicine to sale is fulfilled
                         DB::rollBack();
 
                         throw ValidationException::withMessages([

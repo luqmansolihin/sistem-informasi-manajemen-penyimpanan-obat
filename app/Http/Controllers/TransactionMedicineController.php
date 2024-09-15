@@ -6,8 +6,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\TransactionMedicineStoreRequest;
 use App\Http\Requests\TransactionMedicineUpdateRequest;
 use App\Models\Medicine;
+use App\Models\MedicineSale;
 use App\Models\TransactionMedicine;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 
 class TransactionMedicineController extends Controller
@@ -71,7 +73,41 @@ class TransactionMedicineController extends Controller
     {
         $transactionMedicine = TransactionMedicine::query()->findOrFail($id);
 
-        dd($request->all(), $transactionMedicine);
+        $transactionMedicineUpdate = $request->safe()->except(['medicine', 'quantity']);
+        $transactionMedicineUpdate['qty_balance'] = $transactionMedicine->qty_balance;
+
+        if ($transactionMedicine->medicine_id == $request->validated('medicine_id')) {
+            $isExistMedicineSale = MedicineSale::query()
+                ->where('transaction_medicine_id', $transactionMedicine->id)
+                ->exists();
+
+            if ($isExistMedicineSale) {
+                Validator::validate(['medicine' => $request->validated('medicine')],
+                    ['medicine' => 'not_in:' . $request->validated('medicine')]);
+            }
+        }
+
+        $qtyUpdate = $request->validated('qty');
+
+        if ($request->validated('qty') < $transactionMedicine->qty) {
+            $sumQtyMedicineSale = MedicineSale::query()
+                ->where('transaction_medicine_id', $transactionMedicine->id)
+                ->sum('qty');
+
+            if ($qtyUpdate < $sumQtyMedicineSale) {
+                Validator::validate(['quantity' => $qtyUpdate], ['quantity' => 'int|min:' . $sumQtyMedicineSale]);
+            }
+
+            $transactionMedicineUpdate['qty_balance'] = $transactionMedicine->qty_balance - ($transactionMedicine->qty - $qtyUpdate);
+        }
+
+        if ($request->validated('qty') > $transactionMedicine->qty) {
+            $transactionMedicineUpdate['qty_balance'] = $transactionMedicine->qty_balance + ($qtyUpdate - $transactionMedicine->qty);
+        }
+
+        $transactionMedicine->update($transactionMedicineUpdate);
+
+        return to_route('transactions.medicines.index')->with('success', 'Transaction Medicine has been updated.');
     }
 
     /**
@@ -80,6 +116,14 @@ class TransactionMedicineController extends Controller
     public function destroy(int $id): RedirectResponse
     {
         $transactionMedicine = TransactionMedicine::query()->findOrFail($id);
+
+        $isExistMedicineSale = MedicineSale::query()
+            ->where('transaction_medicine_id', $transactionMedicine->id)
+            ->exists();
+
+        if ($isExistMedicineSale) {
+            return to_route('transactions.medicines.index')->with('error', 'Transaction Medicine is sold, failed to delete.');
+        }
 
         $transactionMedicine->delete();
 

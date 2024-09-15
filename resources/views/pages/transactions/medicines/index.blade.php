@@ -23,6 +23,14 @@
                             </button>
                         </div>
                     @endif
+                    @if(session()->has('error'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>{{ session()->get('error') }}</strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
 
                     <div class="col-lg-2 p-0 mb-2">
                         <a href="{{ route('transactions.medicines.create') }}" class="btn btn-primary btn-block">Add Transaction Medicine</a>
