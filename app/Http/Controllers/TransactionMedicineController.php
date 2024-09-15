@@ -19,6 +19,8 @@ class TransactionMedicineController extends Controller
      */
     public function index(): View
     {
+        $this->authorize('TransactionMedicine.read');
+
         $transactionMedicines = TransactionMedicine::query()
             ->with('medicine:id,name')
             ->select(['id', 'medicine_id', 'purchase_date', 'expired_date', 'qty', 'qty_balance'])
@@ -32,6 +34,8 @@ class TransactionMedicineController extends Controller
      */
     public function create(): View
     {
+        $this->authorize('TransactionMedicine.create');
+
         $medicines = Medicine::query()
             ->select(['id', 'name'])
             ->orderBy('name')
@@ -45,6 +49,8 @@ class TransactionMedicineController extends Controller
      */
     public function store(TransactionMedicineStoreRequest $request): RedirectResponse
     {
+        $this->authorize('TransactionMedicine.create');
+
         TransactionMedicine::query()
             ->create($request->safe()->except(['medicine', 'quantity']));
 
@@ -56,6 +62,8 @@ class TransactionMedicineController extends Controller
      */
     public function edit(int $id): View
     {
+        $this->authorize('TransactionMedicine.update');
+
         $transactionMedicine = TransactionMedicine::query()->findOrFail($id);
 
         $medicines = Medicine::query()
@@ -71,6 +79,8 @@ class TransactionMedicineController extends Controller
      */
     public function update(TransactionMedicineUpdateRequest $request, int $id): RedirectResponse
     {
+        $this->authorize('TransactionMedicine.update');
+
         $transactionMedicine = TransactionMedicine::query()->findOrFail($id);
 
         $transactionMedicineUpdate = $request->safe()->except(['medicine', 'quantity']);
@@ -115,6 +125,8 @@ class TransactionMedicineController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
+        $this->authorize('TransactionMedicine.delete');
+
         $transactionMedicine = TransactionMedicine::query()->findOrFail($id);
 
         $isExistMedicineSale = MedicineSale::query()

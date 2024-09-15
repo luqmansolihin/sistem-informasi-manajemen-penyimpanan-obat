@@ -25,6 +25,8 @@ class TransactionPatientController extends Controller
      */
     public function index(): View
     {
+        $this->authorize('TransactionPatient.read');
+
         $transactionPatients = TransactionPatient::query()
             ->with('patient:id,name')
             ->select(['id', 'patient_id', 'checkup_date', 'disease_name', 'medical_expense'])
@@ -38,6 +40,8 @@ class TransactionPatientController extends Controller
      */
     public function create()
     {
+        $this->authorize('TransactionPatient.create');
+
         $medicines = Medicine::query()
             ->select(['id', 'name'])
             ->orderBy('name')
@@ -56,6 +60,8 @@ class TransactionPatientController extends Controller
      */
     public function store(TransactionPatientStoreRequest $request): RedirectResponse
     {
+        $this->authorize('TransactionPatient.create');
+
         try {
             DB::beginTransaction();
 
@@ -156,6 +162,10 @@ class TransactionPatientController extends Controller
      */
     public function show(int $id): View
     {
+        request()->is('transactions/patients/*/delete')
+            ? $this->authorize('TransactionPatient.delete')
+            : $this->authorize('TransactionPatient.read');
+
         $transactionPatient = TransactionPatient::query()
             ->with('transactionPatientHasMedicines')
             ->findOrFail($id);
@@ -168,6 +178,8 @@ class TransactionPatientController extends Controller
      */
     public function edit(int $id)
     {
+        $this->authorize('TransactionPatient.update');
+
         $transactionPatient = TransactionPatient::query()
             ->with('transactionPatientHasMedicines')
             ->findOrFail($id);
@@ -197,6 +209,8 @@ class TransactionPatientController extends Controller
      */
     public function update(TransactionPatientUpdateRequest $request, int $id): RedirectResponse
     {
+        $this->authorize('TransactionPatient.update');
+
         try {
             DB::beginTransaction();
 
@@ -431,6 +445,8 @@ class TransactionPatientController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
+        $this->authorize('TransactionPatient.delete');
+
         try {
             DB::beginTransaction();
 

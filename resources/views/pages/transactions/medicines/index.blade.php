@@ -32,9 +32,11 @@
                         </div>
                     @endif
 
-                    <div class="col-lg-2 p-0 mb-2">
-                        <a href="{{ route('transactions.medicines.create') }}" class="btn btn-primary btn-block">Add Transaction Medicine</a>
-                    </div>
+                    @can('TransactionPatient.create')
+                        <div class="col-lg-2 p-0 mb-2">
+                            <a href="{{ route('transactions.medicines.create') }}" class="btn btn-primary btn-block">Add Transaction Medicine</a>
+                        </div>
+                    @endcan
 
                     <table id="transaction-medicines" class="table table-bordered table-striped">
                         <thead>
@@ -44,7 +46,9 @@
                             <th>Expired Date</th>
                             <th>Quantity</th>
                             <th>Balance</th>
-                            <th>Action</th>
+                            @canany(['TransactionPatient.update', 'TransactionPatient.delete'])
+                                <th>Action</th>
+                            @endcanany
                         </tr>
                         </thead>
                         <tbody>
@@ -55,16 +59,22 @@
                                 <td>{{ $transactionMedicine->expired_date }}</td>
                                 <td>{{ $transactionMedicine->qty }}</td>
                                 <td>{{ $transactionMedicine->qty_balance }}</td>
-                                <td>
-                                    <a href="{{ route('transactions.medicines.edit', $transactionMedicine->id) }}" class="badge bg-warning" title="Update"><i class="fas fa-edit"></i></a>
-                                    <form action="{{ route('transactions.medicines.destroy', $transactionMedicine->id) }}" method="POST" class="d-inline">
-                                        @method('delete')
-                                        @csrf
-                                        <button type="submit" class="badge bg-danger border-0" title="Delete" onclick="return confirm('Are you sure you want to delete?')">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
-                                    </form>
-                                </td>
+                                @canany(['TransactionPatient.update', 'TransactionPatient.delete'])
+                                    <td>
+                                        @can('TransactionPatient.update')
+                                            <a href="{{ route('transactions.medicines.edit', $transactionMedicine->id) }}" class="badge bg-warning" title="Update"><i class="fas fa-edit"></i></a>
+                                        @endcan
+                                        @can('TransactionPatient.delete')
+                                            <form action="{{ route('transactions.medicines.destroy', $transactionMedicine->id) }}" method="POST" class="d-inline">
+                                                @method('delete')
+                                                @csrf
+                                                <button type="submit" class="badge bg-danger border-0" title="Delete" onclick="return confirm('Are you sure you want to delete?')">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </form>
+                                        @endcan
+                                    </td>
+                                @endcanany
                             </tr>
                         @endforeach
                         </tbody>

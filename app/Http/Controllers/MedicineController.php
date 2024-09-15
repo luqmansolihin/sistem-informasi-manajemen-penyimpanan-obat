@@ -15,6 +15,8 @@ class MedicineController extends Controller
      */
     public function index(): View
     {
+        $this->authorize('MasterMedicine.read');
+
         $medicines = Medicine::query()
             ->select(['id', 'name', 'manufacture'])
             ->get();
@@ -27,6 +29,8 @@ class MedicineController extends Controller
      */
     public function create(): View
     {
+        $this->authorize('MasterMedicine.create');
+
         return view('pages.masters.medicines.create');
     }
 
@@ -35,6 +39,8 @@ class MedicineController extends Controller
      */
     public function store(MedicineStoreRequest $request): RedirectResponse
     {
+        $this->authorize('MasterMedicine.create');
+
         Medicine::query()
             ->create($request->validated());
 
@@ -46,6 +52,8 @@ class MedicineController extends Controller
      */
     public function edit(int $id): View
     {
+        $this->authorize('MasterMedicine.update');
+
         $medicine = Medicine::query()->findOrFail($id);
 
         return view('pages.masters.medicines.edit', compact('medicine'));
@@ -56,6 +64,8 @@ class MedicineController extends Controller
      */
     public function update(MedicineUpdateRequest $request, int $id): RedirectResponse
     {
+        $this->authorize('MasterMedicine.update');
+
         $medicine = Medicine::query()->findOrFail($id);
 
         $medicine->update($request->validated());
@@ -68,6 +78,8 @@ class MedicineController extends Controller
      */
     public function destroy(int $id)
     {
+        $this->authorize('MasterMedicine.delete');
+
         $medicine = Medicine::query()->findOrFail($id);
 
         $medicine->delete();

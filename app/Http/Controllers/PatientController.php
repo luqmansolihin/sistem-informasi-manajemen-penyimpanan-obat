@@ -15,6 +15,8 @@ class PatientController extends Controller
      */
     public function index(): View
     {
+        $this->authorize('MasterPatient.read');
+
         $patients = Patient::query()
             ->select(['id', 'name', 'address'])
             ->get();
@@ -27,6 +29,8 @@ class PatientController extends Controller
      */
     public function create(): View
     {
+        $this->authorize('MasterPatient.create');
+
         return view('pages.masters.patients.create');
     }
 
@@ -35,6 +39,8 @@ class PatientController extends Controller
      */
     public function store(PatientStoreRequest $request): RedirectResponse
     {
+        $this->authorize('MasterPatient.create');
+
         Patient::query()
             ->create($request->validated());
 
@@ -46,6 +52,8 @@ class PatientController extends Controller
      */
     public function edit(int $id): View
     {
+        $this->authorize('MasterPatient.update');
+
         $patient = Patient::query()->findOrFail($id);
 
         return view('pages.masters.patients.edit', compact('patient'));
@@ -56,6 +64,8 @@ class PatientController extends Controller
      */
     public function update(PatientUpdateRequest $request, string $id): RedirectResponse
     {
+        $this->authorize('MasterPatient.update');
+
         $patient = Patient::query()->findOrFail($id);
 
         $patient->update($request->validated());
@@ -68,6 +78,8 @@ class PatientController extends Controller
      */
     public function destroy(int $id)
     {
+        $this->authorize('MasterPatient.delete');
+
         $patient = Patient::query()->findOrFail($id);
 
         $patient->delete();

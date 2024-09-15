@@ -24,9 +24,11 @@
                         </div>
                     @endif
 
-                    <div class="col-lg-2 p-0 mb-2">
-                        <a href="{{ route('transactions.patients.create') }}" class="btn btn-primary btn-block">Add Transaction Patient</a>
-                    </div>
+                    @can('TransactionPatient.create')
+                        <div class="col-lg-2 p-0 mb-2">
+                            <a href="{{ route('transactions.patients.create') }}" class="btn btn-primary btn-block">Add Transaction Patient</a>
+                        </div>
+                    @endcan
 
                     <table id="transaction-patients" class="table table-bordered table-striped">
                         <thead>
@@ -35,7 +37,9 @@
                             <th>Checkup Date</th>
                             <th>Disease Name</th>
                             <th>Medical Expense</th>
-                            <th>Action</th>
+                            @canany(['TransactionPatient.read', 'TransactionPatient.update', 'TransactionPatient.delete'])
+                                <th>Action</th>
+                            @endcanany
                         </tr>
                         </thead>
                         <tbody>
@@ -45,11 +49,19 @@
                                 <td>{{ date('d F Y', strtotime($transactionPatient->checkup_date)) }}</td>
                                 <td>{{ $transactionPatient->disease_name }}</td>
                                 <td>{{ 'Rp ' . number_format($transactionPatient->medical_expense, 2, ',', '.') }}</td>
-                                <td>
-                                    <a href="{{ route('transactions.patients.show', $transactionPatient->id) }}" class="badge bg-primary" title="Detail"><i class="fas fa-eye"></i></a>
-                                    <a href="{{ route('transactions.patients.edit', $transactionPatient->id) }}" class="badge bg-warning" title="Update"><i class="fas fa-edit"></i></a>
-                                    <a href="{{ route('transactions.patients.preview.delete', $transactionPatient->id) }}" class="badge bg-danger" title="Delete"><i class="fas fa-trash-alt"></i></a>
-                                </td>
+                                @canany(['TransactionPatient.read', 'TransactionPatient.update', 'TransactionPatient.delete'])
+                                    <td>
+                                        @can('TransactionPatient.read')
+                                            <a href="{{ route('transactions.patients.show', $transactionPatient->id) }}" class="badge bg-primary" title="Detail"><i class="fas fa-eye"></i></a>
+                                        @endcan
+                                        @can('TransactionPatient.update')
+                                            <a href="{{ route('transactions.patients.edit', $transactionPatient->id) }}" class="badge bg-warning" title="Update"><i class="fas fa-edit"></i></a>
+                                        @endcan
+                                        @can('TransactionPatient.delete')
+                                            <a href="{{ route('transactions.patients.preview.delete', $transactionPatient->id) }}" class="badge bg-danger" title="Delete"><i class="fas fa-trash-alt"></i></a>
+                                        @endcan
+                                    </td>
+                                @endcanany
                             </tr>
                         @endforeach
                         </tbody>

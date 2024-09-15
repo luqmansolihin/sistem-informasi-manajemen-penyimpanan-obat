@@ -22,52 +22,68 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li class="nav-item @if(request()->is('medicines*') OR request()->is('patients*')) menu-open @endif">
-                    <a href="#" class="nav-link @if(request()->is('medicines*') OR request()->is('patients*')) active @endif">
-                        <i class="nav-icon fas fa-database"></i>
-                        <p>
-                            Master
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('medicines.index') }}" class="nav-link @if(request()->is('medicines*')) active @endif">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Medicine</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('patients.index') }}" class="nav-link @if(request()->is('patients*')) active @endif">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Patient</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item @if(request()->is('transactions/medicines*') OR request()->is('transactions/patients*')) menu-open @endif">
-                    <a href="#" class="nav-link @if(request()->is('transactions/medicines*') OR request()->is('transactions/patients*')) active @endif">
-                        <i class="nav-icon fas fa-book-medical"></i>
-                        <p>
-                            Transaction
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('transactions.medicines.index') }}" class="nav-link @if(request()->is('transactions/medicines*')) active @endif">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Medicine</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('transactions.patients.index') }}" class="nav-link @if(request()->is('transactions/patients*')) active @endif">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Patient</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                @canany(['MasterMedicine.read', 'MasterPatient.read'])
+                    <li class="nav-item @if(request()->is('medicines*') OR request()->is('patients*')) menu-open @endif">
+                        <a href="#" class="nav-link @if(request()->is('medicines*') OR request()->is('patients*')) active @endif">
+                            <i class="nav-icon fas fa-database"></i>
+                            <p>
+                                Master
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        @canany(['MasterMedicine.read', 'MasterPatient.read'])
+                            <ul class="nav nav-treeview">
+                                @can('MasterMedicine.read')
+                                    <li class="nav-item">
+                                        <a href="{{ route('medicines.index') }}" class="nav-link @if(request()->is('medicines*')) active @endif">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Medicine</p>
+                                        </a>
+                                    </li>
+                                @endcan
+                                @can('MasterPatient.read')
+                                    <li class="nav-item">
+                                        <a href="{{ route('patients.index') }}" class="nav-link @if(request()->is('patients*')) active @endif">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Patient</p>
+                                        </a>
+                                    </li>
+                                @endcan
+                            </ul>
+                        @endcanany
+                    </li>
+                @endcanany
+                @canany(['TransactionMedicine.read', 'TransactionPatient.read'])
+                    <li class="nav-item @if(request()->is('transactions/medicines*') OR request()->is('transactions/patients*')) menu-open @endif">
+                        <a href="#" class="nav-link @if(request()->is('transactions/medicines*') OR request()->is('transactions/patients*')) active @endif">
+                            <i class="nav-icon fas fa-book-medical"></i>
+                            <p>
+                                Transaction
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        @canany(['TransactionMedicine.read', 'TransactionPatient.read'])
+                        <ul class="nav nav-treeview">
+                            @can('TransactionMedicine.read')
+                                <li class="nav-item">
+                                    <a href="{{ route('transactions.medicines.index') }}" class="nav-link @if(request()->is('transactions/medicines*')) active @endif">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Medicine</p>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('TransactionPatient.read')
+                                <li class="nav-item">
+                                    <a href="{{ route('transactions.patients.index') }}" class="nav-link @if(request()->is('transactions/patients*')) active @endif">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Patient</p>
+                                    </a>
+                                </li>
+                            @endcan
+                        </ul>
+                        @endcanany
+                    </li>
+                @endcanany
                 <li class="nav-item">
                     <form action="{{ route('logout') }}" method="post">
                         @csrf
