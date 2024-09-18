@@ -134,7 +134,8 @@
                     <table class="table table-head-fixed text-nowrap">
                         <thead>
                         <tr>
-                            <th>Patient Name</th>
+                            <th>Name</th>
+                            <th>Address</th>
                             <th>Checkup Date</th>
                             <th>Disease Date</th>
                         </tr>
@@ -143,6 +144,7 @@
                         @foreach($latestPatientVisits as $latestPatientVisit)
                             <tr>
                                 <td>{{ $latestPatientVisit->patient->name }}</td>
+                                <td>{{ $latestPatientVisit->patient->address }}</td>
                                 <td>{{ date('d F Y', strtotime($latestPatientVisit->checkup_date)) }}</td>
                                 <td>{{ $latestPatientVisit->disease_name }}</td>
                             </tr>
