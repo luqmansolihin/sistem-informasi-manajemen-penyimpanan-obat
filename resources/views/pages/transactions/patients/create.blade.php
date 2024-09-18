@@ -24,7 +24,7 @@
                                         name="patient"
                                         required>
                                     @foreach($patients as $patient)
-                                        <option value="{{ $patient->id }}" @if (old('patient') == $patient->id) selected @endif>{{ $patient->name }}</option>
+                                        <option value="{{ $patient->id }}" @if (old('patient') == $patient->id) selected @endif>{{ $patient->name. ' - ' .$patient->address }}</option>
                                     @endforeach
                                 </select>
                                 @error('patient')

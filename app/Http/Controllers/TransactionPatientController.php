@@ -48,7 +48,7 @@ class TransactionPatientController extends Controller
             ->get();
 
         $patients = Patient::query()
-            ->select(['id', 'name'])
+            ->select(['id', 'name', 'address'])
             ->orderBy('name')
             ->get();
 
@@ -196,7 +196,7 @@ class TransactionPatientController extends Controller
             ->get();
 
         $patients = Patient::query()
-            ->select(['id', 'name'])
+            ->select(['id', 'name', 'address'])
             ->withTrashed()
             ->orderBy('name')
             ->get();

@@ -17,7 +17,7 @@
                                         id="patient-id"
                                         name="patient"
                                         disabled>
-                                    <option value="{{ $transactionPatient->patient_id }}" selected>{{ $transactionPatient->patient->name }}</option>
+                                    <option value="{{ $transactionPatient->patient_id }}" selected>{{ $transactionPatient->patient->name. ' - ' .$transactionPatient->patient->address }}</option>
                                 </select>
                             </div>
                         </div>
