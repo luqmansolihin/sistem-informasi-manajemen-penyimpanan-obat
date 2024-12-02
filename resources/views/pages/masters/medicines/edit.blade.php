@@ -5,7 +5,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Master Medicine | Update</h3>
+                    <h3 class="card-title">Master Obat | Ubah</h3>
                 </div>
 
                 <form class="form-horizontal" action="{{ route('medicines.update', $medicine->id) }}" method="POST">
@@ -13,13 +13,13 @@
                     @csrf
                     <div class="card-body">
                         <div class="form-group row">
-                            <label for="name" class="col-sm-2 col-form-label">Name</label>
+                            <label for="name" class="col-sm-2 col-form-label">Nama</label>
                             <div class="col-sm-6">
                                 <input type="text"
                                        name="name"
                                        class="form-control @error('name') is-invalid @enderror"
                                        id="name"
-                                       placeholder="Name"
+                                       placeholder="Nama"
                                        value="{{ old('name', $medicine->name) }}"
                                        required>
                                 @error('name')
@@ -28,13 +28,13 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="manufacture" class="col-sm-2 col-form-label">Manufacture</label>
+                            <label for="manufacture" class="col-sm-2 col-form-label">Produsen</label>
                             <div class="col-sm-6">
                                 <input type="text"
                                        name="manufacture"
                                        class="form-control @error('manufacture') is-invalid @enderror"
                                        id="manufacture"
-                                       placeholder="Manufacture"
+                                       placeholder="Produsen"
                                        value="{{ old('manufacture', $medicine->manufacture) }}"
                                        required>
                                 @error('manufacture')
@@ -45,8 +45,8 @@
                     </div>
 
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                        <a href="{{ url()->previous() }}" class="btn btn-warning">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <a href="{{ url()->previous() }}" class="btn btn-warning">Batal</a>
                     </div>
                 </form>
             </div>

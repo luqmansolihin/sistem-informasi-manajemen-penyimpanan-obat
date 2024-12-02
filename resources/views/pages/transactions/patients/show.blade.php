@@ -5,13 +5,13 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Transaction Patient | @if(request()->is('transactions/patients/*/delete')) Delete @else Detail @endif</h3>
+                    <h3 class="card-title">Transaksi Pasien | @if(request()->is('transactions/patients/*/delete')) Hapus @else Detail @endif</h3>
                 </div>
 
                 <form class="form-horizontal">
                     <div class="card-body">
                         <div class="form-group row">
-                            <label for="patient-id" class="col-sm-2 col-form-label">Patient</label>
+                            <label for="patient-id" class="col-sm-2 col-form-label">Pasien</label>
                             <div class="col-sm-6">
                                 <select class="form-control select2"
                                         id="patient-id"
@@ -22,13 +22,13 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="checkup-date" class="col-sm-2 col-form-label">Checkup Date</label>
+                            <label for="checkup-date" class="col-sm-2 col-form-label">Tanggal Pemeriksaan</label>
                             <div class="col-sm-6">
                                 <div class="input-group date" id="checkup-date" data-target-input="nearest">
                                     <input type="text"
                                            name="checkup_date"
                                            class="form-control datetimepicker-input"
-                                           placeholder="Checkup Date"
+                                           placeholder="Tanggal Pemeriksaan"
                                            value="{{ date('Y-m-d', strtotime($transactionPatient->checkup_date)) }}"
                                            data-target="#checkup-date"
                                            disabled>
@@ -39,19 +39,19 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="disease_name" class="col-sm-2 col-form-label">Disease Name</label>
+                            <label for="disease_name" class="col-sm-2 col-form-label">Diagnosa Penyakit</label>
                             <div class="col-sm-6">
                                 <textarea
                                     name="disease_name"
                                     class="form-control"
                                     id="disease_name"
                                     rows="3"
-                                    placeholder="Disease Name"
+                                    placeholder="Diagnosa Penyakit"
                                     disabled>{{ $transactionPatient->disease_name }}</textarea>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="medical_expense" class="col-sm-2 col-form-label">Medical Expense</label>
+                            <label for="medical_expense" class="col-sm-2 col-form-label">Biaya Pemeriksaan</label>
                             <div class="col-sm-6">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -64,7 +64,7 @@
                                            name="medical_expense"
                                            class="form-control float-right"
                                            id="medical_expense"
-                                           placeholder="Medical Expense"
+                                           placeholder="Biaya Pemeriksaan"
                                            value="{{ $transactionPatient->medical_expense }}"
                                            pattern="[1-9][0-9]*"
                                            oninput="this.value = this.value.replace(/[^0-9]/g, ''); if (this.value < 1) this.value = '';"
@@ -74,10 +74,10 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-4">
-                                <label>Medicine</label>
+                                <label>Obat</label>
                             </div>
                             <div class="col-sm-4">
-                                <label>Quantity</label>
+                                <label>Kuantitaas</label>
                             </div>
                         </div>
                         <div class="form_field_outer">
@@ -99,7 +99,7 @@
                                                name="transaction_patient[0][quantity]"
                                                class="form-control"
                                                id="quantity-0"
-                                               placeholder="Quantity"
+                                               placeholder="Kuantitas"
                                                value="{{ $transactionPatientHasMedicine->qty }}"
                                                pattern="[1-9][0-9]*"
                                                oninput="this.value = this.value.replace(/[^0-9]/g, ''); if (this.value < 1) this.value = '';"
@@ -115,12 +115,12 @@
                         <form action="{{ route('transactions.patients.destroy', $transactionPatient->id) }}" method="POST" class="d-inline">
                             @method('delete')
                             @csrf
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete?')">
-                                Delete
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Anda yakin untuk menghapus?')">
+                                Hapus
                             </button>
                         </form>
                     @endif
-                    <a href="{{ route('transactions.patients.index') }}" class="btn btn-warning">Back</a>
+                    <a href="{{ route('transactions.patients.index') }}" class="btn btn-warning">Kembali</a>
                 </div>
             </div>
         </div>

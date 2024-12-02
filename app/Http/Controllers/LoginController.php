@@ -23,7 +23,7 @@ class LoginController extends Controller
             return redirect()->intended('dashboard');
         }
 
-        return back()->with(['error' => 'Sign in Failed!']);
+        return back()->with(['error' => 'Gagal masuk!']);
     }
 
     public function destroy(Request $request): RedirectResponse

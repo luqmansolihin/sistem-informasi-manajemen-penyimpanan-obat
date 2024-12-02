@@ -38,7 +38,7 @@
 
     <div class="card">
         <div class="card-body login-card-body">
-            <p class="login-box-msg">Sign in to start your session</p>
+            <p class="login-box-msg">Masuk untuk memulai sesi Anda</p>
             <form action="{{ route('login.store') }}" method="post">
                 @csrf
                 <div class="input-group mb-3">
@@ -73,7 +73,7 @@
                 </div>
                 <div class="row">
                     <div class="col-4">
-                        <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                        <button type="submit" class="btn btn-primary btn-block">Masuk</button>
                     </div>
                 </div>
             </form>

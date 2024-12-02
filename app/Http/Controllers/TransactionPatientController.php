@@ -81,7 +81,7 @@ class TransactionPatientController extends Controller
                     DB::rollBack();
 
                     throw ValidationException::withMessages([
-                        'transaction_patient.'.$key.'.quantity' => 'The Quantity field not have balance '
+                        'transaction_patient.'.$key.'.quantity' => 'Stok obat yang tersedia saat tidak mencukupi.'
                     ]);
                 }
 
@@ -110,7 +110,7 @@ class TransactionPatientController extends Controller
                     DB::rollBack();
 
                     throw ValidationException::withMessages([
-                        'transaction_patient.'.$key.'.quantity' => 'The Quantity field not have balance '
+                        'transaction_patient.'.$key.'.quantity' => 'Stok obat yang tersedia saat tidak mencukupi '
                     ]);
                 }
             };
@@ -147,7 +147,7 @@ class TransactionPatientController extends Controller
 
             DB::commit();
 
-            return to_route('transactions.patients.index')->with('success', 'Transaction Patient has been created.');
+            return to_route('transactions.patients.index')->with('success', 'Transaksi pasien berhasil ditambahkan.');
         } catch (QueryException $e) {
             DB::rollBack();
 
@@ -263,7 +263,7 @@ class TransactionPatientController extends Controller
                             DB::rollBack();
 
                             throw ValidationException::withMessages([
-                                'transaction_patient.'.$key.'.medicine' => 'The Medicine field is not exists'
+                                'transaction_patient.'.$key.'.medicine' => 'Obat tidak tersedia'
                             ]);
                         }
 
@@ -319,7 +319,7 @@ class TransactionPatientController extends Controller
                             DB::rollBack();
 
                             throw ValidationException::withMessages([
-                                'transaction_patient.'.$key.'.quantity' => 'The Quantity field not have balance '
+                                'transaction_patient.'.$key.'.quantity' => 'Stok obat yang tersedia saat tidak mencukupi.'
                             ]);
                         }
 
@@ -372,7 +372,7 @@ class TransactionPatientController extends Controller
                         DB::rollBack();
 
                         throw ValidationException::withMessages([
-                            'transaction_patient.'.$key.'.medicine' => 'The Medicine field is not exists'
+                            'transaction_patient.'.$key.'.medicine' => 'Obat tidak tersedia'
                         ]);
                     }
 
@@ -422,7 +422,7 @@ class TransactionPatientController extends Controller
                         DB::rollBack();
 
                         throw ValidationException::withMessages([
-                            'transaction_patient.'.$key.'.quantity' => 'The Quantity field not have balance '
+                            'transaction_patient.'.$key.'.quantity' => 'Stok obat yang tersedia saat tidak mencukupi.'
                         ]);
                     }
                 }
@@ -430,7 +430,7 @@ class TransactionPatientController extends Controller
 
             DB::commit();
 
-            return to_route('transactions.patients.index')->with('success', 'Transaction Patient has been updated.');
+            return to_route('transactions.patients.index')->with('success', 'Transaksi pasien berhasil diubah.');
         } catch (QueryException $e) {
             DB::rollBack();
 
@@ -476,7 +476,7 @@ class TransactionPatientController extends Controller
 
             DB::commit();
 
-            return to_route('transactions.patients.index')->with('success', 'Transaction Patient has been deleted.');
+            return to_route('transactions.patients.index')->with('success', 'Transaksi pasien berhasil dihapus.');
         } catch (QueryException $e) {
             DB::rollBack();
 

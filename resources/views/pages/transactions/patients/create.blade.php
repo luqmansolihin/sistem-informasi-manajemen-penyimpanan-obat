@@ -10,14 +10,14 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Transaction Patient | Create</h3>
+                    <h3 class="card-title">Transaksi Pasien | Buat</h3>
                 </div>
 
                 <form class="form-horizontal" action="{{ route('transactions.patients.store') }}" method="POST">
                     @csrf
                     <div class="card-body">
                         <div class="form-group row">
-                            <label for="patient-id" class="col-sm-2 col-form-label">Patient</label>
+                            <label for="patient-id" class="col-sm-2 col-form-label">Pasien</label>
                             <div class="col-sm-6">
                                 <select class="form-control select2 @error('patient') is-invalid @enderror"
                                         id="patient-id"
@@ -33,13 +33,13 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="checkup-date" class="col-sm-2 col-form-label">Checkup Date</label>
+                            <label for="checkup-date" class="col-sm-2 col-form-label">Tanggal Pemeriksaan</label>
                             <div class="col-sm-6">
                                 <div class="input-group date" id="checkup-date" data-target-input="nearest">
                                     <input type="text"
                                            name="checkup_date"
                                            class="form-control datetimepicker-input @error('checkup_date') is-invalid @enderror"
-                                           placeholder="Checkup Date"
+                                           placeholder="Tanggal Pemeriksaan"
                                            value="{{ old('checkup_date') }}"
                                            data-target="#checkup-date"
                                            required>
@@ -53,14 +53,14 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="disease_name" class="col-sm-2 col-form-label">Disease Name</label>
+                            <label for="disease_name" class="col-sm-2 col-form-label">Diagnosa Penyakit</label>
                             <div class="col-sm-6">
                                 <textarea
                                     name="disease_name"
                                     class="form-control @error('disease_name') is-invalid @enderror"
                                     id="disease_name"
                                     rows="3"
-                                    placeholder="Disease Name"
+                                    placeholder="Diagnosa Penyakit"
                                     required>{{ old('disease_name') }}</textarea>
                                 @error('disease_name')
                                     <span class="error invalid-feedback">{{ $message }}</span>
@@ -68,7 +68,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="medical_expense" class="col-sm-2 col-form-label">Medical Expense</label>
+                            <label for="medical_expense" class="col-sm-2 col-form-label">Biaya Pemeriksaan</label>
                             <div class="col-sm-6">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -81,7 +81,7 @@
                                            name="medical_expense"
                                            class="form-control float-right @error('medical_expense') is-invalid @enderror"
                                            id="medical_expense"
-                                           placeholder="Medical Expense"
+                                           placeholder="Biaya Pemeriksaan"
                                            value="{{ old('medical_expense') }}"
                                            pattern="[1-9][0-9]*"
                                            oninput="this.value = this.value.replace(/[^0-9]/g, ''); if (this.value < 1) this.value = '';"
@@ -94,10 +94,10 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-4">
-                                <label>Medicine</label>
+                                <label>Obat</label>
                             </div>
                             <div class="col-sm-4">
-                                <label>Quantity</label>
+                                <label>Kuantitas</label>
                             </div>
                         </div>
                         <div class="form_field_outer">
@@ -124,7 +124,7 @@
                                            name="transaction_patient[0][quantity]"
                                            class="form-control @error('transaction_patient.0.quantity') is-invalid @enderror"
                                            id="quantity-0"
-                                           placeholder="Quantity"
+                                           placeholder="Kuantitas"
                                            value="{{ old('transaction_patient') ? old('transaction_patient')[0]['quantity'] : '' }}"
                                            pattern="[1-9][0-9]*"
                                            oninput="this.value = this.value.replace(/[^0-9]/g, ''); if (this.value < 1) this.value = '';"
@@ -149,8 +149,8 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                        <a href="{{ route('transactions.patients.index') }}" class="btn btn-warning">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <a href="{{ route('transactions.patients.index') }}" class="btn btn-warning">Batal</a>
                     </div>
                 </form>
             </div>
@@ -193,7 +193,7 @@
                                    name="transaction_patient[${index}][quantity]"
                                    class="form-control"
                                    id="quantity-${index}"
-                                   placeholder="Quantity"
+                                   placeholder="Kuantitas"
                                    pattern="[1-9][0-9]*"
                                    oninput="this.value = this.value.replace(/[^0-9]/g, ''); if (this.value < 1) this.value = '';"
                                    required>
@@ -262,7 +262,7 @@
                                        name="transaction_patient[{{$loop->index}}][quantity]"
                                        class="form-control @error('transaction_patient.'.$index.'.quantity') is-invalid @enderror"
                                        id="quantity-{{$loop->index}}"
-                                       placeholder="Quantity"
+                                       placeholder="Kuantitas"
                                        value="{{ old('transaction_patient')[$index]['quantity'] }}"
                                        pattern="[1-9][0-9]*"
                                        oninput="this.value = this.value.replace(/[^0-9]/g, ''); if (this.value < 1) this.value = '';"

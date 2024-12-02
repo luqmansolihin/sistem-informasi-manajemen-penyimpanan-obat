@@ -37,7 +37,7 @@
                                     <li class="nav-item">
                                         <a href="{{ route('medicines.index') }}" class="nav-link @if(request()->is('medicines*')) active @endif">
                                             <i class="far fa-circle nav-icon"></i>
-                                            <p>Medicine</p>
+                                            <p>Obat</p>
                                         </a>
                                     </li>
                                 @endcan
@@ -45,7 +45,7 @@
                                     <li class="nav-item">
                                         <a href="{{ route('patients.index') }}" class="nav-link @if(request()->is('patients*')) active @endif">
                                             <i class="far fa-circle nav-icon"></i>
-                                            <p>Patient</p>
+                                            <p>Pasien</p>
                                         </a>
                                     </li>
                                 @endcan
@@ -58,7 +58,7 @@
                         <a href="#" class="nav-link @if(request()->is('transactions/medicines*') OR request()->is('transactions/patients*')) active @endif">
                             <i class="nav-icon fas fa-book-medical"></i>
                             <p>
-                                Transaction
+                                Transaksi
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -68,7 +68,7 @@
                                 <li class="nav-item">
                                     <a href="{{ route('transactions.medicines.index') }}" class="nav-link @if(request()->is('transactions/medicines*')) active @endif">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Medicine</p>
+                                        <p>Obat</p>
                                     </a>
                                 </li>
                             @endcan
@@ -76,7 +76,7 @@
                                 <li class="nav-item">
                                     <a href="{{ route('transactions.patients.index') }}" class="nav-link @if(request()->is('transactions/patients*')) active @endif">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Patient</p>
+                                        <p>Pasien</p>
                                     </a>
                                 </li>
                             @endcan
@@ -89,7 +89,7 @@
                         @csrf
                         <button type="submit" class="nav-link text-left btn" style="color: #c2c7d0;">
                             <i class="nav-icon fas fa-sign-out-alt"></i>
-                            <p>Logout</p>
+                            <p>Keluar</p>
                         </button>
                     </form>
                 </li>

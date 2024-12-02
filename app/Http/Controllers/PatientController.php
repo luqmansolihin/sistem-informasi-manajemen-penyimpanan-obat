@@ -44,7 +44,7 @@ class PatientController extends Controller
         Patient::query()
             ->create($request->validated());
 
-        return to_route('patients.index')->with('success', 'Patient has been created.');
+        return to_route('patients.index')->with('success', 'Pasien berhasil ditambahkan.');
     }
 
     /**
@@ -70,7 +70,7 @@ class PatientController extends Controller
 
         $patient->update($request->validated());
 
-        return to_route('patients.index')->with('success', 'Patient has been updated.');
+        return to_route('patients.index')->with('success', 'Pasien berhasil diubah.');
     }
 
     /**
@@ -84,6 +84,6 @@ class PatientController extends Controller
 
         $patient->delete();
 
-        return to_route('patients.index')->with('success', 'Patient has been deleted.');
+        return to_route('patients.index')->with('success', 'Pasien berhasil dihapus.');
     }
 }

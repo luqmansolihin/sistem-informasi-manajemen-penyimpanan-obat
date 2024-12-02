@@ -44,7 +44,7 @@ class MedicineController extends Controller
         Medicine::query()
             ->create($request->validated());
 
-        return to_route('medicines.index')->with('success', 'Medicine has been created.');
+        return to_route('medicines.index')->with('success', 'Obat berhasil ditambahkan.');
     }
 
     /**
@@ -70,7 +70,7 @@ class MedicineController extends Controller
 
         $medicine->update($request->validated());
 
-        return to_route('medicines.index')->with('success', 'Medicine has been updated.');
+        return to_route('medicines.index')->with('success', 'Obat berhasil diubah.');
     }
 
     /**
@@ -84,6 +84,6 @@ class MedicineController extends Controller
 
         $medicine->delete();
 
-        return to_route('medicines.index')->with('success', 'Medicine has been deleted.');
+        return to_route('medicines.index')->with('success', 'Obat berhasil dihapus.');
     }
 }

@@ -10,14 +10,14 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Transaction Medicine | Create</h3>
+                    <h3 class="card-title">Transaksi Obat | Buat</h3>
                 </div>
 
                 <form class="form-horizontal" action="{{ route('transactions.medicines.store') }}" method="POST">
                     @csrf
                     <div class="card-body">
                         <div class="form-group row">
-                            <label for="medicine-id" class="col-sm-2 col-form-label">Medicine</label>
+                            <label for="medicine-id" class="col-sm-2 col-form-label">Obat</label>
                             <div class="col-sm-6">
                                 <select class="form-control select2 @error('medicine') is-invalid @enderror"
                                         id="medicine-id"
@@ -33,14 +33,14 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="quantity" class="col-sm-2 col-form-label">Quantity</label>
+                            <label for="quantity" class="col-sm-2 col-form-label">Kuantitas</label>
                             <div class="col-sm-6">
                                 <input type="text"
                                        inputmode="numeric"
                                        name="quantity"
                                        class="form-control @error('quantity') is-invalid @enderror"
                                        id="quantity"
-                                       placeholder="Quantity"
+                                       placeholder="Kuantitas"
                                        value="{{ old('quantity') }}"
                                        pattern="[1-9][0-9]*"
                                        oninput="this.value = this.value.replace(/[^0-9]/g, ''); if (this.value < 1) this.value = '';"
@@ -51,13 +51,13 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="purchase-date" class="col-sm-2 col-form-label">Purchase Date</label>
+                            <label for="purchase-date" class="col-sm-2 col-form-label">Tanggal Pembelian</label>
                             <div class="col-sm-6">
                                 <div class="input-group date" id="purchase-date" data-target-input="nearest">
                                     <input type="text"
                                            name="purchase_date"
                                            class="form-control datetimepicker-input @error('purchase_date') is-invalid @enderror"
-                                           placeholder="Purchase Date"
+                                           placeholder="Tanggal Pembelian"
                                            value="{{ old('purchase_date') }}"
                                            data-target="#purchase-date"
                                            required>
@@ -71,13 +71,13 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="expired-date" class="col-sm-2 col-form-label">Expired Date</label>
+                            <label for="expired-date" class="col-sm-2 col-form-label">Tanggal Kedaluwarsa</label>
                             <div class="col-sm-6">
                                 <div class="input-group date" id="expired-date" data-target-input="nearest">
                                     <input type="text"
                                            name="expired_date"
                                            class="form-control datetimepicker-input @error('expired_date') is-invalid @enderror"
-                                           placeholder="Expired Date"
+                                           placeholder="Tanggal Kedaluwarsa"
                                            value="{{ old('expired_date') }}"
                                            data-target="#expired-date"
                                            required>
@@ -92,8 +92,8 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                        <a href="{{ url()->previous() }}" class="btn btn-warning">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <a href="{{ url()->previous() }}" class="btn btn-warning">Batal</a>
                     </div>
                 </form>
             </div>

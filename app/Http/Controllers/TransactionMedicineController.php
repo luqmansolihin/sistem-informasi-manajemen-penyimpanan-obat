@@ -54,7 +54,7 @@ class TransactionMedicineController extends Controller
         TransactionMedicine::query()
             ->create($request->safe()->except(['medicine', 'quantity']));
 
-        return to_route('transactions.medicines.index')->with('success', 'Transaction Medicine has been created.');
+        return to_route('transactions.medicines.index')->with('success', 'Transaksi obat berhasil ditambahkan.');
     }
 
     /**
@@ -117,7 +117,7 @@ class TransactionMedicineController extends Controller
 
         $transactionMedicine->update($transactionMedicineUpdate);
 
-        return to_route('transactions.medicines.index')->with('success', 'Transaction Medicine has been updated.');
+        return to_route('transactions.medicines.index')->with('success', 'Transaksi obat berhasil diubah.');
     }
 
     /**
@@ -134,11 +134,11 @@ class TransactionMedicineController extends Controller
             ->exists();
 
         if ($isExistMedicineSale) {
-            return to_route('transactions.medicines.index')->with('error', 'Transaction Medicine is sold, failed to delete.');
+            return to_route('transactions.medicines.index')->with('error', 'Obat sudah terjual, gagal untuk dihapus.');
         }
 
         $transactionMedicine->delete();
 
-        return to_route('transactions.medicines.index')->with('success', 'Transaction Medicine has been deleted.');
+        return to_route('transactions.medicines.index')->with('success', 'Transaksi obat berhasil dihapus.');
     }
 }

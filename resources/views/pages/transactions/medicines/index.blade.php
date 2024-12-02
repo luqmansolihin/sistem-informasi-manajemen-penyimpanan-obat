@@ -11,7 +11,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Transaction Medicine</h3>
+                    <h3 class="card-title">Transaksi Obat</h3>
                 </div>
 
                 <div class="card-body">
@@ -34,18 +34,18 @@
 
                     @can('TransactionPatient.create')
                         <div class="col-lg-2 p-0 mb-2">
-                            <a href="{{ route('transactions.medicines.create') }}" class="btn btn-primary btn-block">Add Transaction Medicine</a>
+                            <a href="{{ route('transactions.medicines.create') }}" class="btn btn-primary btn-block">Tambah Transaksi Obat</a>
                         </div>
                     @endcan
 
                     <table id="transaction-medicines" class="table table-bordered table-striped">
                         <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Purchase Date</th>
-                            <th>Expired Date</th>
-                            <th>Quantity</th>
-                            <th>Balance</th>
+                            <th>Nama Obat</th>
+                            <th>Tanggal Pembelian</th>
+                            <th>Tanggal Kedaluwarsa</th>
+                            <th>Kuantitas</th>
+                            <th>Stok Saat Ini</th>
                             @canany(['TransactionPatient.update', 'TransactionPatient.delete'])
                                 <th>Action</th>
                             @endcanany
@@ -62,13 +62,13 @@
                                 @canany(['TransactionPatient.update', 'TransactionPatient.delete'])
                                     <td>
                                         @can('TransactionPatient.update')
-                                            <a href="{{ route('transactions.medicines.edit', $transactionMedicine->id) }}" class="badge bg-warning" title="Update"><i class="fas fa-edit"></i></a>
+                                            <a href="{{ route('transactions.medicines.edit', $transactionMedicine->id) }}" class="badge bg-warning" title="Ubah"><i class="fas fa-edit"></i></a>
                                         @endcan
                                         @can('TransactionPatient.delete')
                                             <form action="{{ route('transactions.medicines.destroy', $transactionMedicine->id) }}" method="POST" class="d-inline">
                                                 @method('delete')
                                                 @csrf
-                                                <button type="submit" class="badge bg-danger border-0" title="Delete" onclick="return confirm('Are you sure you want to delete?')">
+                                                <button type="submit" class="badge bg-danger border-0" title="Hapus" onclick="return confirm('Anda yakin untuk menghapus?')">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </button>
                                             </form>
@@ -112,24 +112,87 @@
                 "buttons": [
                     {
                         extend: 'print',
+                        text: 'Cetak',
+                        title: '',
+                        customize: function (win) {
+                            let searchValue = $(".dataTables_filter input").val();
+
+                            // Tambahkan sub-header
+                            $(win.document.body).prepend(
+                                '<div id="custom-header" style="text-align: center;">' +
+                                '<h2>' + "{{ config('app.name') }}" + '</h2>' +
+                                '<h3>Data Transaksi Obat</h3>' +
+                                '</div>'
+                            );
+
+                            // Tambahkan informasi pencarian setelah tanggal dicetak jika ada pencarian
+                            if (searchValue) {
+                                $(win.document.body).find('#custom-header').append(
+                                    '<p style="text-align: center;">Pencarian: ' + searchValue.toUpperCase() + '</p>'
+                                );
+                            }
+                        },
                         exportOptions: {
                             columns: ':visible'
                         }
                     },
                     {
                         extend: 'pdf',
+                        title: '',
+                        customize: function (doc) {
+                            let searchValue = $(".dataTables_filter input").val();
+
+                            // Tambahkan sub-header
+                            doc.content.splice(0, 0, {
+                                alignment: 'center',
+                                text: [
+                                    { text: "{{ config('app.name') }}\n", fontSize: 16, bold: true },
+                                    { text: "Data Transaksi Obat\n", fontSize: 14 },
+                                ]
+                            });
+
+                            // Tambahkan informasi pencarian jika ada
+                            if (searchValue) {
+                                doc.content.splice(1, 0, {
+                                    alignment: 'center',
+                                    text: 'Pencarian: ' + searchValue.toUpperCase(),
+                                    margin: [0, 10]
+                                });
+                            }
+                        },
                         exportOptions: {
                             columns: ':visible'
                         }
                     },
                     {
-                        extend: 'excel',
+                        extend: 'excelHtml5',
+                        title: "{{ config('app.name') }}",  // This will be the title for the Excel file
+                        messageTop: function() {
+                            let searchValue = $(".dataTables_filter input").val();
+                            let searchText = searchValue ? `Pencarian: ${searchValue.toUpperCase()}` : '';
+
+                            return `Data Transaksi Obat`+
+                                ` \n${searchText}`;
+                        },
                         exportOptions: {
                             columns: ':visible'
                         }
                     },
-                    "colvis"
-                ]
+                    {
+                        extend: 'colvis',
+                        text: 'Visibilitas Kolom'
+                    }
+                ],
+                "language": {
+                    search: "Cari:",
+                    info: "Menampilkan _START_ hingga _END_ dari _TOTAL_ entri",
+                    paginate: {
+                        first: "Pertama",
+                        last: "Terakhir",
+                        next: "Berikutnya",
+                        previous: "Sebelumnya"
+                    }
+                }
             })
                 .buttons()
                 .container()
