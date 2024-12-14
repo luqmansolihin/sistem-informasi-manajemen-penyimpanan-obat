@@ -27,7 +27,7 @@
                         <a href="#" class="nav-link @if(request()->is('medicines*') OR request()->is('patients*')) active @endif">
                             <i class="nav-icon fas fa-database"></i>
                             <p>
-                                Master
+                                Daftar Data
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
