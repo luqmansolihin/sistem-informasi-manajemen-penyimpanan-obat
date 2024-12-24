@@ -11,7 +11,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Master Pasien</h3>
+                    <h3 class="card-title">Daftar Data Pasien</h3>
                 </div>
 
                 <div class="card-body">
