@@ -12,7 +12,7 @@
                     @csrf
                     <div class="card-body">
                         <div class="form-group row">
-                            <label for="name" class="col-sm-2 col-form-label">Name</label>
+                            <label for="name" class="col-sm-2 col-form-label">Nama</label>
                             <div class="col-sm-6">
                                 <input type="text"
                                        name="name"

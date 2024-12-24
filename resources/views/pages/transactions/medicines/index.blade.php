@@ -47,7 +47,7 @@
                             <th>Kuantitas</th>
                             <th>Stok Saat Ini</th>
                             @canany(['TransactionPatient.update', 'TransactionPatient.delete'])
-                                <th>Action</th>
+                                <th>Aksi</th>
                             @endcanany
                         </tr>
                         </thead>
