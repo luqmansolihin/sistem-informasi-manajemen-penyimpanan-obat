@@ -5,7 +5,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Master Obat | Ubah</h3>
+                    <h3 class="card-title">Daftar Data Obat | Ubah</h3>
                 </div>
 
                 <form class="form-horizontal" action="{{ route('medicines.update', $medicine->id) }}" method="POST">
