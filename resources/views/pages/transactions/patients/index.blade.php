@@ -118,6 +118,14 @@
                                     '<p style="text-align: center;">Pencarian: ' + searchValue.toUpperCase() + '</p>'
                                 );
                             }
+
+                            // Tambahkan tanda tangan di bawah tabel
+                            $(win.document.body).append(
+                                '<div id="signature-section" style="margin-top: 50px; text-align: left;">' +
+                                '<p>'+"{{ env('APP_LOCATION').", ". now()->format('d F Y')  }}"+'</p>' +
+                                '<p style="margin-top: 100px;">_________________________</p>' +
+                                '</div>'
+                            );
                         },
                         exportOptions: {
                             columns: ':visible'
@@ -146,6 +154,15 @@
                                     margin: [0, 10]
                                 });
                             }
+
+                            // Tambahkan tanda tangan di bawah tabel
+                            doc.content.push({
+                                margin: [0, 30],
+                                text: [
+                                    { text: '{{ env('APP_LOCATION').", ". now()->format('d F Y')  }}' },
+                                    { text: '\n\n\n\n\n\n_________________________', alignment: 'left' }
+                                ]
+                            });
                         },
                         exportOptions: {
                             columns: ':visible'
@@ -160,6 +177,27 @@
 
                             return `Data Transaksi Pasien`+
                                 ` \n${searchText}`;
+                        },
+                        footer: true,  // Enable footer in Excel
+                        customize: function (xlsx) {
+                            let sheet = xlsx.xl.worksheets['sheet1.xml'];
+                            let lastRow = $('row:last', sheet);
+
+                            // Tambahkan tanda tangan di bawah tabel
+                            let signature = `
+                                <row></row>
+                                <row>
+                                    <c t="inlineStr"><is><t>`+"{{ env('APP_LOCATION').", ". now()->format('d F Y')  }}"+`</t></is></c>
+                                </row>
+                                <row></row>
+                                <row></row>
+                                <row></row>
+                                <row>
+                                    <c t="inlineStr"><is><t>_________________________</t></is></c>
+                                </row>
+                            `;
+
+                            lastRow.after(signature);
                         },
                         exportOptions: {
                             columns: ':visible'
