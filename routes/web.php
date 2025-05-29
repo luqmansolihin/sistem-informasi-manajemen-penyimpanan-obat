@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MedicineController;
@@ -16,6 +17,13 @@ Route::group(['middleware' => 'guest'], function () {
     Route::group(['controller' => LoginController::class], function () {
         Route::get('/login', 'index')->name('login');
         Route::post('/login', 'store')->name('login.store');
+    });
+
+    Route::group(['controller' => AuthController::class], function () {
+        Route::get('/forgot-password', 'forgotPassword')->name('password.request');
+        Route::post('/forgot-password', 'sendResetPasswordEmail')->name('password.email');
+        Route::get('/reset-password/{token}', 'passwordResetToken')->name('password.reset');
+        Route::post('/reset-password', 'resetPassword')->name('password.update');
     });
 });
 

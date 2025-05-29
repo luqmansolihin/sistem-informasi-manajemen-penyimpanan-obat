@@ -54,8 +54,8 @@
 
     <div class="card">
         <div class="card-body login-card-body">
-            <p class="login-box-msg">Masuk untuk memulai sesi Anda</p>
-            <form action="{{ route('login.store') }}" method="post">
+            <p class="login-box-msg">Masukkan username untuk mereset password Anda</p>
+            <form action="{{ route('password.email') }}" method="post">
                 @csrf
                 <div class="input-group mb-3">
                     <input type="text"
@@ -72,29 +72,9 @@
                         <span class="error invalid-feedback">{{ $message }}</span>
                     @enderror
                 </div>
-                <div class="input-group mb-3">
-                    <input type="password"
-                           name="password"
-                           class="form-control @error('password') is-invalid @enderror"
-                           placeholder="Password"
-                           required>
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-lock"></span>
-                        </div>
-                    </div>
-                    @error('password')
-                        <span class="error invalid-feedback">{{ $message }}</span>
-                    @enderror
-                </div>
                 <div class="row">
-                    <div class="col text-right">
-                        <a href="{{ url('/forgot-password') }}" class="text-decoration-none">Lupa Password?</a>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-4">
-                        <button type="submit" class="btn btn-primary btn-block">Masuk</button>
+                    <div class="col-8">
+                        <button type="submit" class="btn btn-primary btn-block">Reset Password</button>
                     </div>
                 </div>
             </form>

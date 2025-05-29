@@ -54,24 +54,11 @@
 
     <div class="card">
         <div class="card-body login-card-body">
-            <p class="login-box-msg">Masuk untuk memulai sesi Anda</p>
-            <form action="{{ route('login.store') }}" method="post">
+            <p class="login-box-msg">Masukkan password baru Anda</p>
+            <form action="{{ route('password.update') }}" method="post">
                 @csrf
-                <div class="input-group mb-3">
-                    <input type="text"
-                           name="username"
-                           class="form-control @error('username') is-invalid @enderror"
-                           placeholder="Username"
-                           required>
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-user-circle"></span>
-                        </div>
-                    </div>
-                    @error('username')
-                        <span class="error invalid-feedback">{{ $message }}</span>
-                    @enderror
-                </div>
+                <input type="hidden" name="token" value="{{ $token }}">
+                <input type="hidden" name="email" value="{{ $email }}">
                 <div class="input-group mb-3">
                     <input type="password"
                            name="password"
@@ -87,14 +74,21 @@
                         <span class="error invalid-feedback">{{ $message }}</span>
                     @enderror
                 </div>
-                <div class="row">
-                    <div class="col text-right">
-                        <a href="{{ url('/forgot-password') }}" class="text-decoration-none">Lupa Password?</a>
+                <div class="input-group mb-3">
+                    <input type="password"
+                           name="password_confirmation"
+                           class="form-control"
+                           placeholder="Password Confirmation"
+                           required>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-4">
-                        <button type="submit" class="btn btn-primary btn-block">Masuk</button>
+                    <div class="col-8">
+                        <button type="submit" class="btn btn-primary btn-block">Reset Password</button>
                     </div>
                 </div>
             </form>
